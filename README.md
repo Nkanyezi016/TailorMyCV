@@ -4,7 +4,7 @@ TailorMyCV is a planned web application that helps job seekers build a CV for a 
 
 This is a backend and data engineering portfolio project. It follows the full journey from unstructured documents to validated records, concurrent background processing and versioned outputs.
 
-**Project status:** Planning and implementation backlog. The features and architecture below describe the first release. Local setup instructions will be added with the integrated application.
+The [backend setup guide](backend/README.md) covers local development for issue #2. The architecture below describes the planned integrated release.
 
 ## How it will work
 
