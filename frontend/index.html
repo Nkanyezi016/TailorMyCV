@@ -9,7 +9,7 @@
 :root {
   --bg:#f7f6f9; --card:#fff; --ink:#241d2d; --muted:#645c70;
   --line:#e3dfe9; --accent:#5e3b92; --accent-light:#eee7fa;
-  --sidebar:#21182d; --butter:#fff0c2;
+  --sidebar:#21182d;
   --display:system-ui,sans-serif; --body:system-ui,sans-serif;
   color-scheme:light;
 }
@@ -69,12 +69,24 @@ textarea {min-height:90px;resize:vertical}
 .drop {display:block;border:1px dashed #9d85b9;border-radius:7px;padding:24px;text-align:center;background:#faf8fd;cursor:pointer}
 .drop.over {background:var(--accent-light)}
 .toast {position:fixed;right:16px;bottom:16px;z-index:5;background:var(--ink);color:white;padding:10px 14px;border-radius:6px;max-width:calc(100% - 32px)}
-.theme-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.template-grid,.theme-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.template-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+.template-option {display:grid;gap:4px;align-content:start}
+.template-diagram {display:block;width:50px;height:31px;border:1px solid #9a86b4;border-radius:3px;background:#faf8fd;padding:5px}
+.template-diagram::before,.template-diagram::after {content:"";display:block;background:#9a86b4}
+.template-diagram::before {width:40%;height:3px;margin-bottom:4px}
+.template-diagram::after {width:100%;height:11px;background:repeating-linear-gradient(to bottom,#c9bcd9 0 1px,transparent 1px 4px)}
+.template-diagram.compact::after {height:11px;background:repeating-linear-gradient(to bottom,#c9bcd9 0 1px,transparent 1px 3px)}
+.template-diagram.split::after {background:repeating-linear-gradient(to bottom,#c9bcd9 0 1px,transparent 1px 4px);border-right:11px solid #ddd2eb}
+.build-status {max-width:620px}
+.build-icon {display:block;width:24px;height:24px;border:2px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:build-spin .8s linear infinite}
+@keyframes build-spin {to {transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce) {.build-icon{animation:none}}
 .swatch {border:1px solid var(--line);border-radius:6px;padding:8px;background:white;cursor:pointer;text-align:left}
 .swatch[aria-pressed=true] {border-color:var(--accent);outline:1px solid var(--accent)}
 .swatch .chips {display:flex;height:20px;border-radius:3px;overflow:hidden;margin-bottom:5px}
 .swatch .chips i {flex:1}
-.cv {background:white;border:1px solid var(--line);border-radius:5px;padding:clamp(16px,4vw,38px);overflow-wrap:anywhere}
+.cv {container-type:inline-size;background:white;border:1px solid var(--line);border-radius:5px;padding:clamp(16px,4vw,38px);overflow-wrap:anywhere}
 .cv header {padding:16px;margin:0 0 17px}
 .cv h1 {font-size:clamp(1.5rem,3vw,2.15rem)}
 .cv h2 {font-size:1.05rem;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid currentColor}
@@ -83,19 +95,25 @@ textarea {min-height:90px;resize:vertical}
 .cv .item {margin-bottom:12px}
 .cv ul {margin:6px 0 0;padding-left:20px}
 .cv .chip {display:inline-block;margin:3px 4px 3px 0;padding:2px 6px;border-radius:3px;font-size:.9rem}
-.cv .hl {background:var(--butter)}
+.cv-compact {padding:clamp(12px,3vw,26px);font-size:.92rem}
+.cv-compact header {padding:8px 12px;margin-bottom:10px}
+.cv-compact h2 {margin:11px 0 5px;padding-bottom:3px}
+.cv-compact .item {margin-bottom:7px}
+.cv-columns {display:grid;gap:0 24px}
+@container (min-width:450px) {
+  .cv-columns {grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)}
+  .cv-support {border-left:1px solid var(--line);padding-left:18px}
+}
 .t-blush header{background:#ffd9e4}.t-blush h2{color:#a53e6a}.t-blush .chip{background:#ffe9f0;color:#8a2f57}
 .t-mint header{background:#c9f2e1}.t-mint h2{color:#1f7a5a}.t-mint .chip{background:#e0f8ee;color:#1f6a4f}
 .t-lavender header{background:#dccffa}.t-lavender h2{color:#5b3fb5}.t-lavender .chip{background:#efe9ff;color:#4a2fa0}
 .t-sky header{background:#cfe9ff}.t-sky h2{color:#2a6aa8}.t-sky .chip{background:#e6f3ff;color:#1f5a8a}
 .saved-list {display:grid;gap:8px}
 .saved,.saved .btns {display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
-.notice {padding:10px 13px;border-radius:5px;background:#fcf1d6;color:#61450d}
 .profile-stats {margin:0}
 .profile-stats div {display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
 .profile-stats dt {color:var(--muted)}
 .profile-stats dd {margin:0;font-weight:650}
-.match-list {margin:8px 0 0;padding-left:20px}
 @media (max-width:900px) {.workspace{grid-template-columns:185px minmax(0,1fr)}.job-grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px) {
   .workspace {display:block}
@@ -104,6 +122,7 @@ textarea {min-height:90px;resize:vertical}
   .nav-item {width:auto;padding:6px 8px}
   .storage-note {display:none}
   .grid2,.choice {grid-template-columns:1fr}
+  .template-grid {grid-template-columns:1fr}
   .theme-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
@@ -134,6 +153,11 @@ const THEMES = [
   {id:"lavender",name:"Lavender",c:["#dccffa","#efe9ff","#5b3fb5"]},
   {id:"sky",name:"Sky",c:["#cfe9ff","#e6f3ff","#2a6aa8"]}
 ];
+const TEMPLATES = [
+  {id:"classic",name:"Classic",description:"Standard single column"},
+  {id:"compact",name:"Compact",description:"Single column with tighter spacing"},
+  {id:"split",name:"Split",description:"Experience and supporting details side by side"}
+];
 const blankProfile = () => ({
   name:"", email:"",
   contact:{ email:"", phone:"", location:"", links:"" },
@@ -151,6 +175,7 @@ const state = {
   profile: blankProfile(),
   step: 0,             // wizard section index
   theme: "lavender",
+  template: "classic",
   tailorJD: "",
   jobTitle: "",
   jobCompany: "",
@@ -530,18 +555,18 @@ function renderChoose(){
   app().innerHTML = `
   <section class="hero"><h1>Base profile</h1><p>Use your saved details to build a standard CV or tailor one to a role.</p></section>
   <div class="choice">
-    <button data-mode="plain"><b>Create my CV</b><span>A clean CV from everything you’ve shared.</span></button>
+    <button data-mode="plain"><b>Build a standard CV</b><span>A clean CV from everything you’ve shared.</span></button>
     <button data-mode="tailor"><b>Tailor to a job</b><span>Paste a job description and we’ll put your most relevant experience first.</span></button>
   </div>
   <p class="hint" style="text-align:center;margin-top:18px"><button class="btn ghost small" id="backWiz">← Edit my answers</button></p>`;
   app().querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{
-    if(b.dataset.mode==="plain"){ state.tailored = null; state.currentCv = null; state.draftTitle = null; go(renderPreview); }
+    if(b.dataset.mode==="plain") go(() => renderBuild(renderChoose));
     else go(renderJob);
   });
   $("#backWiz").onclick = ()=>{ state.step = 0; go(renderWizard); };
 }
 
-/* ---------- Job description matching (runs in the browser) ---------- */
+/* ---------- Local draft generation until the backend is connected ---------- */
 function evidenceItems(p){
   const items = [];
   p.work.forEach((w,i)=> items.push({kind:"work", idx:i, text:[w.title,w.org,w.responsibilities,w.contribution,w.outcome].join(" ")}));
@@ -557,22 +582,46 @@ function tailorProfile(p, jd){
     const score = [...words].filter(w=>topSet.has(w)).length;
     return {...it, score};
   });
-  const order = (kind, n) => scored.filter(s=>s.kind===kind).sort((a,b)=>b.score-a.score).map(s=>s.idx);
+  const order = kind => scored.filter(s=>s.kind===kind).sort((a,b)=>b.score-a.score).map(s=>s.idx);
   const skillList = lines(p.skills.replace(/,/g,"\n")).map(s=>s.trim()).filter(Boolean);
   const hitSkills = skillList.filter(s=>Object.keys(keywords(s)).some(w=>topSet.has(w)));
-  const allText = JSON.stringify(p).toLowerCase();
-  const gaps = top.filter(w=>!allText.includes(w)).slice(0,8);
-  const matched = top.filter(w=>allText.includes(w)).slice(0,14);
   return {
-    workOrder: order("work"), projectOrder: order("projects"),
-    skills: [...hitSkills, ...skillList.filter(s=>!hitSkills.includes(s))],
-    matched, gaps, hl: new Set(matched)
+    workOrder: order("work"),
+    projectOrder: order("projects"),
+    skills: [...hitSkills, ...skillList.filter(s=>!hitSkills.includes(s))]
+  };
+}
+function renderBuild(back, job = null){
+  renderNav(job ? "tailor" : "profile");
+  app().innerHTML = `
+    <section class="card stack build-status" id="buildStatus">
+      <span class="build-icon" aria-hidden="true"></span>
+      <div role="status">
+        <h1 tabindex="-1">Lodestar is building your CV</h1>
+        <p class="hint">Making your experience shine. Leaving “synergy” out of it.</p>
+      </div>
+      <button class="btn ghost small" id="cancelBuild">Cancel</button>
+    </section>`;
+  const loading = $("#buildStatus");
+  loading.querySelector("h1").focus();
+  const build = setTimeout(() => {
+    if(!loading.isConnected) return;
+    state.tailored = job ? tailorProfile(state.profile, job.description) : null;
+    state.currentCv = null;
+    state.draftTitle = null;
+    go(renderPreview);
+    $("#app h1").setAttribute("tabindex","-1");
+    $("#app h1").focus();
+  }, 1100);
+  $("#cancelBuild").onclick = () => {
+    clearTimeout(build);
+    go(back);
   };
 }
 function tailoringHeader(active){
-  const tabs = [["job","Job description"],["match","Keyword match"],["preview","CV preview"],["compare","Compare CVs"]];
+  const tabs = [["job","Job description"],["preview","CV preview"],["compare","Compare CVs"]];
   return `
-  <section class="hero job-hero"><h1>Tailor your CV</h1><p>Match a job description to the experience in your base profile.</p></section>
+  <section class="hero job-hero"><h1>Tailor your CV</h1><p>Build a CV for a specific role using your base profile.</p></section>
   <nav class="steps" aria-label="Tailoring workflow">
     ${tabs.map(([key,label]) => `<button class="step-tab" data-panel="${key}" ${key===active?'aria-current="step"':""} ${key!=="job"&&!state.tailored?"disabled":""}>${label}</button>`).join("")}
   </nav>`;
@@ -598,7 +647,7 @@ function renderJob(){
         <textarea id="jd" rows="9" required aria-describedby="jdErr" placeholder="Paste the responsibilities, skills and requirements from the job listing">${esc(state.tailorJD)}</textarea>
       </label>
       <p class="hint" id="jdErr" role="status"></p>
-      <button class="btn" type="submit">Match keywords</button>
+      <button class="btn" type="submit">Build with Lodestar</button>
     </form>
     <aside class="card stack" aria-labelledby="baseHeading">
       <h2 id="baseHeading">Your base profile</h2>
@@ -618,60 +667,44 @@ function renderJob(){
     state.tailorJD = jd;
     state.jobTitle = $("#jobTitle").value.trim();
     state.jobCompany = $("#jobCompany").value.trim();
-    state.tailored = tailorProfile(state.profile, jd);
-    state.currentCv = null;
-    state.draftTitle = null;
-    go(renderMatch);
+    go(() => renderBuild(renderJob, {description:jd}));
   };
-}
-function renderMatch(){
-  renderNav("tailor");
-  const terms = (title, words, empty) => `<section class="card">
-    <h2>${title}</h2>
-    ${words.length ? `<ul class="match-list">${words.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>` : `<p class="hint">${empty}</p>`}
-  </section>`;
-  app().innerHTML = `${tailoringHeader("match")}
-    <div class="stack">
-      <div class="grid2">
-        ${terms("Keywords found in your profile",state.tailored.matched,"No keyword matches found.")}
-        ${terms("Keywords to review",state.tailored.gaps,"No gaps found among the checked keywords.")}
-      </div>
-      <p class="hint">If you have evidence for a term, add an example to your base profile.</p>
-      <button class="btn" data-panel="preview">Preview tailored CV</button>
-    </div>`;
 }
 function renderCompare(){
   renderNav("tailor");
   app().innerHTML = `${tailoringHeader("compare")}
     <div class="grid2">
-      <section class="stack"><h2>Base CV</h2>${cvHtml(state.profile,state.theme,null)}</section>
-      <section class="stack"><h2>Tailored CV</h2>${cvHtml(state.profile,state.theme,state.tailored)}</section>
+      <section class="stack"><h2>Base CV</h2>${cvHtml(state.profile,state.theme,null,state.template)}</section>
+      <section class="stack"><h2>Tailored CV</h2>${cvHtml(state.profile,state.theme,state.tailored,state.template)}</section>
     </div>`;
 }
 
 /* ---------- CV rendering ---------- */
-const hl = (text, set) => set && set.size ? esc(text).replace(new RegExp("\\b(" + [...set].map(w=>w.replace(/[.*+?^${}()|[\]\\\-]/g,"\\$&")).join("|") + ")\\b","gi"), '<span class="hl">$1</span>') : esc(text);
-const bullets = (text, set) => lines(text).length ? `<ul>${lines(text).map(l=>`<li>${hl(l,set)}</li>`).join("")}</ul>` : "";
-function cvHtml(p, theme, tailored){
-  const set = tailored?.hl;
+const bullets = text => lines(text).length ? `<ul>${lines(text).map(l=>`<li>${esc(l)}</li>`).join("")}</ul>` : "";
+function cvHtml(p, theme, tailored, template){
   const c = p.contact;
   const work = tailored ? tailored.workOrder.map(i=>p.work[i]) : p.work;
   const projects = tailored ? tailored.projectOrder.map(i=>p.projects[i]) : p.projects;
   const skills = tailored ? tailored.skills : lines(p.skills.replace(/,/g,"\n"));
   const linkList = lines(c.links);
   const section = (title, body) => body ? `<h2>${title}</h2>${body}` : "";
-  return `<article class="cv t-${theme}">
+  const header = `<article class="cv cv-${template} t-${theme}">
     <header><h1>${esc(p.name)}</h1>
       <div class="meta">${[c.email,c.phone,c.location].filter(Boolean).map(esc).join(" · ")}</div>
       ${linkList.length?`<div class="meta">${linkList.map(esc).join(" · ")}</div>`:""}
-    </header>
-    ${section("Education & training", p.noEducation ? "" : p.education.filter(e=>e.qual).map(e=>`<div class="item"><b>${esc(e.qual)}</b>${e.institution?` — ${esc(e.institution)}`:""}${e.study?`<div class="sub">${esc(e.study)}</div>`:""}<div class="sub">${[e.start,e.end].filter(Boolean).map(esc).join(" – ")}${e.grades?` · ${esc(e.grades)}`:""}</div></div>`).join("") + bullets(p.certs))}
-    ${section("Experience", work.filter(w=>w.title).map(w=>`<div class="item"><b>${hl(w.title,set)}</b>${w.org?` — ${esc(w.org)}`:""}<div class="sub">${esc(w.dates||"")}</div>${bullets([w.responsibilities,w.contribution,w.outcome].filter(Boolean).join("\n"),set)}</div>`).join(""))}
-    ${section("Projects", projects.filter(x=>x.name).map(x=>`<div class="item"><b>${hl(x.name,set)}</b>${x.tools?`<div class="sub">${hl(x.tools,set)}</div>`:""}${bullets([x.problem,x.contribution].filter(Boolean).join("\n"),set)}${x.link?`<div class="sub">${esc(x.link)}</div>`:""}</div>`).join(""))}
-    ${section("Skills", skills.length ? skills.map(s=>`<span class="chip">${hl(s,set)}</span>`).join("") : "")}
-    ${section("Languages", bullets(p.languages))}
-    ${section("Awards & leadership", bullets(p.awards))}
-  </article>`;
+    </header>`;
+  const education = section("Education & training", p.noEducation ? "" : p.education.filter(e=>e.qual).map(e=>`<div class="item"><b>${esc(e.qual)}</b>${e.institution?` — ${esc(e.institution)}`:""}${e.study?`<div class="sub">${esc(e.study)}</div>`:""}<div class="sub">${[e.start,e.end].filter(Boolean).map(esc).join(" – ")}${e.grades?` · ${esc(e.grades)}`:""}</div></div>`).join("") + bullets(p.certs));
+  const experience = section("Experience", work.filter(w=>w.title).map(w=>`<div class="item"><b>${esc(w.title)}</b>${w.org?` — ${esc(w.org)}`:""}<div class="sub">${esc(w.dates||"")}</div>${bullets([w.responsibilities,w.contribution,w.outcome].filter(Boolean).join("\n"))}</div>`).join(""));
+  const projectSection = section("Projects", projects.filter(x=>x.name).map(x=>`<div class="item"><b>${esc(x.name)}</b>${x.tools?`<div class="sub">${esc(x.tools)}</div>`:""}${bullets([x.problem,x.contribution].filter(Boolean).join("\n"))}${x.link?`<div class="sub">${esc(x.link)}</div>`:""}</div>`).join(""));
+  const skillSection = section("Skills", skills.length ? skills.map(s=>`<span class="chip">${esc(s)}</span>`).join("") : "");
+  const languages = section("Languages", bullets(p.languages));
+  const awards = section("Awards & leadership", bullets(p.awards));
+  const primary = experience + projectSection;
+  const supporting = education + skillSection + languages + awards;
+  const sections = template==="split" && primary && supporting
+    ? `<div class="cv-columns"><div>${primary}</div><div class="cv-support">${supporting}</div></div>`
+    : education + primary + skillSection + languages + awards;
+  return header + sections + "</article>";
 }
 
 /* ---------- Preview, themes, save, download ---------- */
@@ -717,15 +750,20 @@ function renderPreview(){
     <button class="swatch" data-theme="${th.id}" aria-pressed="${state.theme===th.id}">
       <div class="chips">${th.c.map(c=>`<i style="background:${c}"></i>`).join("")}</div>
       <b>${th.name}</b></button>`).join("");
-  const gaps = t && t.gaps.length ? `<div class="notice">Your draft doesn’t show evidence for: <b>${esc(t.gaps.join(", "))}</b>. Add an example to your profile if you have one.</div>` : "";
+  const templateGrid = TEMPLATES.map(template => `
+    <button class="swatch template-option" data-template="${template.id}" aria-pressed="${state.template===template.id}">
+      <span class="template-diagram ${template.id}" aria-hidden="true"></span>
+      <b>${template.name}</b><small class="hint">${template.description}</small>
+    </button>`).join("");
   app().innerHTML = `${t ? tailoringHeader("preview") : '<section class="hero"><h1>CV preview</h1></section>'}
   <div class="stack">
     <div class="card stack">
-      <h2>Choose a theme</h2>
+      <h2>Layout template</h2>
+      <div class="template-grid">${templateGrid}</div>
+      <h2>Colour theme</h2>
       <div class="theme-grid">${themeGrid}</div>
     </div>
-    ${gaps}
-    <div class="card">${cvHtml(state.profile, state.theme, t)}</div>
+    <div class="card" id="cvPreview">${cvHtml(state.profile, state.theme, t, state.template)}</div>
     <div class="card stack">
       <label class="field">CV name (shown in your library)
         <input id="cvTitle" value="${esc(state.draftTitle ?? cur?.title ?? (t ? `CV for ${state.jobTitle || (state.tailorJD.split(/\n/)[0]||"job").slice(0,40)}` : "My CV"))}">
@@ -741,13 +779,22 @@ function renderPreview(){
       ${cur?`<div class="row"><button class="btn danger small" id="removeCv">Remove this CV</button></div>`:""}
     </div>
   </div>`;
-  app().querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>{ state.draftTitle = $("#cvTitle").value; state.theme = b.dataset.theme; renderPreview(); });
+  for(const option of app().querySelectorAll("[data-template], [data-theme]")){
+    option.onclick = () => {
+      const key = option.dataset.template ? "template" : "theme";
+      state[key] = option.dataset[key];
+      app().querySelectorAll(`[data-${key}]`).forEach(button =>
+        button.setAttribute("aria-pressed", String(button===option))
+      );
+      $("#cvPreview").innerHTML = cvHtml(state.profile, state.theme, t, state.template);
+    };
+  }
   $("#backEdit").onclick = ()=> go(state.tailored ? renderJob : renderChoose);
   const fname = () => safeName($("#cvTitle").value);
   $("#dlTxt").onclick = ()=> downloadFile(fname()+".txt", atsText(state.profile, t), "text/plain");
   $("#dlHtml").onclick = ()=>{
     const css = document.querySelector("style").textContent;
-    const page = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc($("#cvTitle").value)}</title><style>${css}</style></head><body style="padding:24px">${cvHtml(state.profile, state.theme, t)}</body></html>`;
+    const page = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc($("#cvTitle").value)}</title><style>${css}</style></head><body style="padding:24px">${cvHtml(state.profile, state.theme, t, state.template)}</body></html>`;
     downloadFile(fname()+".html", page, "text/html");
   };
   $("#saveCv").onclick = ()=> saveCurrent();
@@ -757,8 +804,8 @@ function saveCurrent(){
   const title = $("#cvTitle").value.trim() || "My CV";
   const list = store.get(KEY_CVS, []);
   const t = state.tailored;
-  const rec = { id: state.currentCv?.id || uid(), title, theme: state.theme, profile: state.profile,
-    tailored: t ? {...t, hl: [...t.hl]} : null,
+  const rec = { id: state.currentCv?.id || uid(), title, theme: state.theme, template: state.template, profile: state.profile,
+    tailored: t,
     jobDescription: t ? state.tailorJD : "",
     jobTitle: t ? state.jobTitle : "",
     jobCompany: t ? state.jobCompany : "",
@@ -784,11 +831,12 @@ function openCv(id){
   state.currentCv = rec;
   state.profile = rec.profile;
   state.theme = rec.theme;
+  state.template = TEMPLATES.some(template => template.id===rec.template) ? rec.template : "classic";
   state.tailorJD = rec.jobDescription || "";
   state.jobTitle = rec.jobTitle || "";
   state.jobCompany = rec.jobCompany || "";
   state.draftTitle = null;
-  state.tailored = rec.tailored ? {...rec.tailored, hl: new Set(rec.tailored.hl)} : null;
+  state.tailored = rec.tailored || null;
   go(renderPreview);
 }
 function renderLibrary(){
@@ -840,7 +888,7 @@ document.addEventListener("click", e=>{
   const panel = e.target.closest("[data-panel]")?.dataset.panel;
   if(panel){
     if($("#cvTitle")) state.draftTitle = $("#cvTitle").value;
-    go({job:renderJob,match:renderMatch,preview:renderPreview,compare:renderCompare}[panel]);
+    go({job:renderJob,preview:renderPreview,compare:renderCompare}[panel]);
     return;
   }
   const act = e.target.closest("[data-act]")?.dataset.act;
