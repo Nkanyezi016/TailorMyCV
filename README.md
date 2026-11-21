@@ -4,7 +4,46 @@ TailorMyCV is a planned web application that helps job seekers build a CV for a 
 
 This is a backend and data engineering portfolio project. It follows the full journey from unstructured documents to validated records, concurrent background processing and versioned outputs.
 
-**Project status:** Planning and implementation backlog. The features and architecture below describe the first release. Local setup instructions will be added with the integrated application.
+## Run locally
+
+Use Python 3.11 or newer. Run the frontend and backend in separate terminals.
+
+### Frontend
+
+Run this command from the repository root.
+
+~~~sh
+python -m http.server 5500 --bind 127.0.0.1 --directory frontend
+~~~
+
+Open [http://127.0.0.1:5500](http://127.0.0.1:5500) for the CV builder.
+
+### Backend
+
+The FastAPI backend is on the [`feature/backend-cv-lodestar` branch](https://github.com/Nkanyezi016/TailorMyCV/tree/feature/backend-cv-lodestar/backend). Open a second terminal at the repository root and switch to that branch.
+
+~~~sh
+git fetch origin
+git switch feature/backend-cv-lodestar
+cd backend
+python -m venv .venv
+~~~
+
+Install the dependencies and start the API in Windows PowerShell.
+
+~~~powershell
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --no-access-log
+~~~
+
+On macOS or Linux, use these commands.
+
+~~~sh
+.venv/bin/python -m pip install -e .
+.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --no-access-log
+~~~
+
+Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to try the API. The default local provider works without an API key. The frontend currently runs in the browser using its own local workflow. [Issue #4 tracks connecting it to the API.](https://github.com/Nkanyezi016/TailorMyCV/issues/4)
 
 ## How it will work
 
